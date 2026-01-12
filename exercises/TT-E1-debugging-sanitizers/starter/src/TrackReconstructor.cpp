@@ -17,7 +17,7 @@ std::vector<Track> TrackReconstructor::reconstruct() {
 
     // BUG 2: Heap Buffer Overflow
     // Off-by-one error: i <= size() writes one element past the allocation.
-    for (size_t i = 0; i <= m_hits.size(); ++i) {
+    for (size_t i = 0; i < m_hits.size(); ++i) {
         hitBuffer[i] = m_hits[i];
     }
 
@@ -29,7 +29,7 @@ std::vector<Track> TrackReconstructor::reconstruct() {
         tracks.push_back(t);
     }
 
-    // Missing: delete[] hitBuffer;
+     delete[] hitBuffer;
 
     return tracks;
 }
@@ -42,7 +42,7 @@ const Track* TrackReconstructor::getBestTrack() const {
     best->hits = m_hits;
 
     delete best;   // freed here
-    return best;   // ERROR: returning freed pointer
+    //return best;   // ERROR: returning freed pointer
 }
 
 } // namespace tt_e1
